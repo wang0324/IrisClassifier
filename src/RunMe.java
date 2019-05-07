@@ -1,6 +1,6 @@
 public class RunMe {
     public static final String WHAT_TO_CLASSIFY = "virginica";
-    public static final String[] features = {"sepal length", "sepal width"};
+    public static final String[] features = {"sepal length", "sepal width", "petal length", "petal width"};
     public static void main(String[] args) {
         DataSet dataset;
         Perceptron nn;

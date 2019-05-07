@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 public class Perceptron {
     private int numInputs;
     private float[] weights;
@@ -15,8 +13,13 @@ public class Perceptron {
     }
 
     private float[] initWeights(int numInputs) {
-        // TODO:  initialize the weights
-        return null;
+        weights = new float[numInputs];
+
+        for (int i = 0; i < numInputs; i++) {
+            weights[i] = 0;//(float)(Math.random()*0.2);
+        }
+
+        return weights;
     }
 
     /***
@@ -28,8 +31,19 @@ public class Perceptron {
      * @return
      */
     public boolean train(float[] input, String correctLabel) {
-        // TODO:  Implement this.
+        int guess = guess(input);
+        System.out.println(guess + " " + correctLabel);
 
+        if (!isGuessCorrect(guess, correctLabel)) {
+            float actual = getCorrectGuess(correctLabel);
+            float error = guess - actual;
+            for (int i = 0; i < weights.length; i++) {
+                weights[i] -= error * input[i] * learningRate;
+            }
+            THRESHOLD -= error * learningRate;
+
+            return true;
+        }
         // run the perceptron on the input
         // compare the guess with the correct label (can use already-made helper method for this).
 
@@ -43,7 +57,11 @@ public class Perceptron {
         // TODO:  Implement this.
         // Do a linear combination of the inputs multiplied by the weights.
         // Run the sum through the activiationFunction and return the result
-        return -1;
+        float sum = 0;
+        for (int i = 0; i < input.length; i++) {
+            sum += weights[i] * input[i];
+        }
+        return activationFunction(sum);
     }
 
     private int activationFunction(float sum) {
